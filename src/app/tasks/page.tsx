@@ -1,10 +1,13 @@
 "use client"
 
+import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useTasksContext } from "@/contexts/TaskContext";
 import LoadingSpinnerPageComponent from "@/features/components/loading/loading";
 import CreateTaskDialogComponent from "@/features/components/task/create-task-dialog-component";
+import { AlertDialog } from "@radix-ui/react-alert-dialog";
+
 import { LogOut, Plus, Edit, Funnel, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -43,10 +46,10 @@ export default function TasksPageComponent() {
     }
 
     function handleDeleteTask(id: string) {
-        if (confirm("Tem certeza que deseja excluir esta tarefa?")) {
-            deleteTask(id);
-            localStorage.setItem("tasks", JSON.stringify(tasksContext.tasks.filter((task) => task.id !== id)));
-        }
+
+        deleteTask(id);
+        localStorage.setItem("tasks", JSON.stringify(tasksContext.tasks.filter((task) => task.id !== id)));
+
     }
 
 
@@ -122,9 +125,25 @@ export default function TasksPageComponent() {
                                         <Button size="sm" variant="ghost" onClick={() => handleEditTask(task.id)}>
                                             <Edit />
                                         </Button>
-                                        <Button size="sm" variant="ghost" onClick={() => handleDeleteTask(task.id)}>
-                                            <Trash className="text-red-500" />
-                                        </Button>
+
+                                        <AlertDialog>
+                                            <AlertDialogTrigger>
+                                                <Button size="sm" variant="ghost">
+                                                    <Trash className="text-red-500" />
+                                                </Button></AlertDialogTrigger>
+                                            <AlertDialogContent>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle>Tem certeza que deseja deletar esta tarefa?</AlertDialogTitle>
+                                                    <AlertDialogDescription>
+                                                        Esta ação não pode ser desfeita, mas não se preocupe é possível criar outros cards.
+                                                    </AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                                    <AlertDialogAction onClick={() => handleDeleteTask(task.id)}>Continuar</AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
                                     </div>
                                 </div>
                                 <p className="mt-2 text-gray-700">{task.description || "Sem descrição"}</p>

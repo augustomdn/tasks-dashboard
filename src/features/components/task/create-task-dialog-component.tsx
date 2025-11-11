@@ -21,7 +21,6 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("normal");
 
-  // Preenche os campos caso esteja editando
   useEffect(() => {
     if (task) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
