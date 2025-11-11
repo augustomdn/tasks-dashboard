@@ -8,6 +8,7 @@ interface TasksContextType {
     tasks: Task[]
     createTask: (task: Omit<Task, "id" | "createdAt">) => void
     updateTask: (id: string, updatedTask: Partial<Task>) => void
+    deleteTask: (id: string) => void;
 }
 
 const TasksContext = createContext<TasksContextType | undefined>(undefined)
@@ -35,9 +36,13 @@ export function TasksProvider({ children }: { children: ReactNode }) {
         })
     }
 
+    const deleteTask = (id: string) => {
+        setTasks(prev => prev.filter(task => task.id !== id));
+    }
+
 
     return (
-        <TasksContext.Provider value={{ tasks, createTask, updateTask}}>
+        <TasksContext.Provider value={{ tasks, createTask, updateTask, deleteTask}}>
             {children}
         </TasksContext.Provider>
     )

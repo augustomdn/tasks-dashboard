@@ -5,16 +5,18 @@ import { Card } from "@/components/ui/card";
 import { useTasksContext } from "@/contexts/TaskContext";
 import LoadingSpinnerPageComponent from "@/features/components/loading/loading";
 import CreateTaskDialogComponent from "@/features/components/task/create-task-dialog-component";
-import { LogOut, Plus, Edit, Funnel } from "lucide-react";
+import { LogOut, Plus, Edit, Funnel, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function TasksPageComponent() {
+    const { deleteTask } = useTasksContext();
+
     const [isLoading, setIsLoading] = useState(true);
     const [open, setOpen] = useState(false);
     const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
     const router = useRouter();
-    const tasks = useTasksContext();
+    const tasksContext = useTasksContext();
 
     useEffect(() => {
         const isLogged = localStorage.getItem("isLogged");
@@ -39,6 +41,14 @@ export default function TasksPageComponent() {
         setEditingTaskId(taskId);
         setOpen(true);
     }
+
+    function handleDeleteTask(id: string) {
+        if (confirm("Tem certeza que deseja excluir esta tarefa?")) {
+            deleteTask(id);
+            localStorage.setItem("tasks", JSON.stringify(tasksContext.tasks.filter((task) => task.id !== id)));
+        }
+    }
+
 
     if (isLoading) {
         return <LoadingSpinnerPageComponent />;
@@ -87,35 +97,46 @@ export default function TasksPageComponent() {
             </div>
 
 
-            <CreateTaskDialogComponent open={open} setOpen={setOpen} />
+            <CreateTaskDialogComponent open={open} setOpen={setOpen} task={tasksContext.tasks.find((task) => task.id === editingTaskId || null)} />
 
-            <section className="w-full flex flex-col gap-4">
+            <section className="h-full w-full flex flex-col gap-4">
                 <div>
-                    <h2 className="text-xl font-bold text-center">Minha Lista</h2>
-                    <Button>
+                    {tasksContext.tasks.length === 0 ? null : <Button>
                         <Funnel />
                         <span>Filtrar</span>
-                    </Button>
+                    </Button>}
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {tasks.tasks.map((task) => (
-                        <Card key={task.id} className="p-4 flex flex-col justify-between">
-                            <div className="flex justify-between items-start">
-                                <h3 className="text-lg font-semibold">{task.title}</h3>
-                                <Button size="sm" variant="ghost" onClick={() => handleEditTask(task.id)}>
-                                    <Edit />
-                                </Button>
-                            </div>
-                            <p className="mt-2 text-gray-700">{task.description || "Sem descrição"}</p>
-                            <div className="mt-4 flex justify-between items-center">
-                                <span className={`px-2 py-1 rounded-full text-sm ${getPriorityColor(task.priority)}`}>
-                                    {task.priority}
-                                </span>
-                                <span className="text-sm italic">{task.status}</span>
-                            </div>
-                        </Card>
-                    ))}
-                </div>
+                {tasksContext.tasks.length === 0 ?
+                    <div className="w-full h-full flex justify-center items-center">
+                        <p className="text-lg md:text-2xl text-gray-600 mb-6 text-center">
+                            Sua lista de tarefas se encontra vazia.
+                        </p>
+                    </div> :
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {tasksContext.tasks.map((task) => (
+                            <Card key={task.id} className="p-4 flex flex-col justify-between">
+                                <div className="flex justify-between items-start">
+                                    <h3 className="text-lg font-semibold">{task.title}</h3>
+                                    <div className="flex">
+                                        <Button size="sm" variant="ghost" onClick={() => handleEditTask(task.id)}>
+                                            <Edit />
+                                        </Button>
+                                        <Button size="sm" variant="ghost" onClick={() => handleDeleteTask(task.id)}>
+                                            <Trash className="text-red-500" />
+                                        </Button>
+                                    </div>
+                                </div>
+                                <p className="mt-2 text-gray-700">{task.description || "Sem descrição"}</p>
+                                <div className="mt-4 flex justify-between items-center">
+                                    <span className={`px-2 py-1 rounded-full text-sm ${getPriorityColor(task.priority)}`}>
+                                        {task.priority}
+                                    </span>
+                                    <span className="text-sm italic">{task.status}</span>
+                                </div>
+                            </Card>
+                        ))}
+                    </div>}
             </section>
         </div>
     );
