@@ -60,13 +60,13 @@ export default function TasksPageComponent() {
     // Função auxiliar para colorir a prioridade
     function getPriorityColor(priority: string) {
         switch (priority) {
-            case "urgent":
+            case "Urgente":
                 return "bg-red-500 text-white";
-            case "important":
+            case "Importante":
                 return "bg-yellow-500 text-black";
-            case "normal":
+            case "Normal":
                 return "bg-blue-500 text-white";
-            case "not-urgent":
+            case "Não importante":
                 return "bg-gray-300 text-black";
             default:
                 return "bg-gray-200";
@@ -104,10 +104,11 @@ export default function TasksPageComponent() {
 
             <section className="h-full w-full flex flex-col gap-4">
                 <div>
-                    {tasksContext.tasks.length === 0 ? null : <Button>
-                        <Funnel />
-                        <span>Filtrar</span>
-                    </Button>}
+                    {tasksContext.tasks.length === 0 ? null :
+                        <Button onClick={() => { }}>
+                            <Funnel />
+                            <span>Filtrar</span>
+                        </Button>}
                 </div>
                 {tasksContext.tasks.length === 0 ?
                     <div className="w-full h-full flex justify-center items-center">
@@ -127,10 +128,9 @@ export default function TasksPageComponent() {
                                         </Button>
 
                                         <AlertDialog>
-                                            <AlertDialogTrigger>
-                                                <Button size="sm" variant="ghost">
-                                                    <Trash className="text-red-500" />
-                                                </Button></AlertDialogTrigger>
+                                            <AlertDialogTrigger className="hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 rounded-lg">
+                                                <Trash className="text-red-500 m-2" size={16} />
+                                            </AlertDialogTrigger>
                                             <AlertDialogContent>
                                                 <AlertDialogHeader>
                                                     <AlertDialogTitle>Tem certeza que deseja deletar esta tarefa?</AlertDialogTitle>

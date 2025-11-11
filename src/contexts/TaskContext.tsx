@@ -16,7 +16,6 @@ const TasksContext = createContext<TasksContextType | undefined>(undefined)
 export function TasksProvider({ children }: { children: ReactNode }) {
   const [tasks, setTasks] = useState<Task[]>([])
 
-  // Carrega as tasks do localStorage apenas no cliente
   useEffect(() => {
     const stored = localStorage.getItem("tasks")
     if (stored) {
@@ -25,7 +24,6 @@ export function TasksProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  // Atualiza o localStorage sempre que as tasks mudarem
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks))
   }, [tasks])

@@ -12,6 +12,7 @@ interface Props {
   open: boolean;
   setOpen: (value: boolean) => void;
   task?: Task | null;
+
 }
 
 export default function CreateTaskDialogComponent({ open, setOpen, task }: Props) {
@@ -19,7 +20,9 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("normal");
+  const [priority, setPriority] = useState("Normal");
+  const [status, setStatus] = useState("");
+
 
   useEffect(() => {
     if (task) {
@@ -27,18 +30,20 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
       setTitle(task.title);
       setDescription(task.description);
       setPriority(task.priority);
+      setStatus(task.status);
     } else {
       setTitle("");
       setDescription("");
-      setPriority("normal");
+      setPriority("Normal");
+      setStatus("Pendente");
     }
   }, [task, open]);
 
   function handleSave() {
     if (task) {
-      updateTask(task.id, { title, description, priority });
+      updateTask(task.id, { title, description, priority, status });
     } else {
-      createTask({ title, description, priority, status: "pending" });
+      createTask({ title, description, priority, status });
     }
     setOpen(false);
   }
@@ -68,10 +73,19 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
           >
-            <option value="urgent">Urgente</option>
-            <option value="important">Importante</option>
-            <option value="normal">Normal</option>
-            <option value="not-urgent">Não Urgente</option>
+            <option value="Urgente">Urgente</option>
+            <option value="Importante">Importante</option>
+            <option value="Normal">Normal</option>
+            <option value="Não importante">Não importante</option>
+          </select>
+          <select
+            className="border rounded p-2"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="Pendente">Pendente</option>
+            <option value="Em andamento">Em andamento</option>
+            <option value="Concluída">Concluída</option>
           </select>
         </div>
 
