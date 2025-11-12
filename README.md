@@ -17,7 +17,7 @@
 ### ✨ Funcionalidades
 - Login, é possível efetuar login com as credencias solicitadas pelo avaliador [Login: admin] [Senha: password].
 - Dentro da plataforma é possível:
-  - Criar tarefas, cada tarefa tem um Título(obrigatório), Descrição, Prioridade e Status.
+  - Criar tarefas, cada tarefa tem um Título (obrigatório), Descrição, Prioridade e Status.
   - Editar tarefas
   - Excluir tarefas
   - Efetuar filtragens por:
