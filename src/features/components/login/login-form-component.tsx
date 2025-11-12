@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import z from "zod"
 
 
@@ -53,11 +54,12 @@ export default function LoginFormComponent() {
       if (data.username === "admin" && data.password === "password") {
         localStorage.setItem("isLogged", "true");
 
-        alert(`Login realizado com sucesso! Bem vindo`)
+        toast.success("Login realizado com sucesso! Bem vindo")
+
         router.push("/tasks")
 
       } else {
-        alert("Login inválido! Tente novamente.")
+        toast.warning("Falha ao realizar login, verifique suas credenciais");
       }
 
       setIsLoading(false)

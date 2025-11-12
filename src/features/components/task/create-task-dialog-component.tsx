@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useTasksContext } from "@/contexts/TaskContext";
 import { Task } from "@/types/task";
+import { toast } from "sonner";
 
 interface Props {
   open: boolean;
@@ -42,8 +43,10 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
   function handleSave() {
     if (task) {
       updateTask(task.id, { title, description, priority, status });
+      toast.success("Tarefa atualizada!");
     } else {
       createTask({ title, description, priority, status });
+      toast.success("Tarefa criada!");
     }
     setOpen(false);
   }
