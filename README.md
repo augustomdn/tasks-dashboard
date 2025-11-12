@@ -2,7 +2,7 @@
 
 #### Aplicação voltada para criação de uma lista de tarefas, possibilitando uma maior autonomia das atividades do usuário no dia a dia.
 
-![Tela principal da aplicação]()
+![Tela principal da aplicação](https://i.imgur.com/Uz9rc8v.jpeg)
 
 #### Este projeto foi criado como uma resolução de um teste técnico solicitado pela SGA (Software Gaming Architects).
 
