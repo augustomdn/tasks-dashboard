@@ -92,9 +92,9 @@ export default function TasksPageComponent() {
         <div className="h-full md:h-screen p-4 flex flex-col gap-4 bg-linear-to-b from-green-300 to-white md:bg-linear-to-r ">
             <header className="w-full flex justify-between items-center">
                 <h2 className="text-2xl font-bold">Dashboard</h2>
-                <div className="md:flex gap-2">
+                <div className="flex gap 2 md:flex gap-2">
                     <AddTaskButtonComponent
-                        className="hidden md:flex"
+                        className="max-sm:hidden md:flex"
                         setEditingTaskId={setEditingTaskId}
                         setOpen={setOpen} />
                     <LogoutButtonComponent handleLogout={handleLogout} />
