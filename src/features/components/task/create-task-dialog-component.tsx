@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useTasksContext } from "@/contexts/TaskContext";
 import { Task } from "@/types/task";
 import { toast } from "sonner";
+import { Label } from "@/components/ui/label";
 
 interface Props {
   open: boolean;
@@ -60,17 +61,20 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
           <DialogTitle>{task ? "Editar Tarefa" : "Nova Tarefa"}</DialogTitle>
         </DialogHeader>
 
-        <div className="flex flex-col gap-4 mt-4">
+        <div className="flex flex-col gap-3 mt-4">
+          <Label className="text-sm">Título</Label>
           <Input
             placeholder="Título"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+          <Label className="text-sm">Descrição</Label>
           <Textarea
             placeholder="Descrição"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          <Label className="text-sm">Prioridade</Label>
           <select
             className="border rounded p-2"
             value={priority}
@@ -81,6 +85,7 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
             <option value="Normal">Normal</option>
             <option value="Não importante">Não importante</option>
           </select>
+          <Label className="text-sm">Status</Label>
           <select
             className="border rounded p-2"
             value={status}
