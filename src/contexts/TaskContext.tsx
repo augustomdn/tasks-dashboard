@@ -3,12 +3,14 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react"
 import { Task } from "@/types/task"
+import { TaskTag } from "@/types/task-tag"
 
 interface TasksContextType {
   tasks: Task[]
-  createTask: (task: Omit<Task, "id" | "createdAt">) => void
-  updateTask: (id: string, updatedTask: Partial<Task>) => void
-  deleteTask: (id: string) => void
+  createTask: (task: Omit<Task, "id" | "createdAt">) => void;
+  updateTask: (id: string, updatedTask: Partial<Task>) => void;
+  deleteTask: (id: string) => void;
+  addTagToTask: (taskId: string, tag: TaskTag) => void;
 }
 
 const TasksContext = createContext<TasksContextType | undefined>(undefined)
@@ -41,8 +43,12 @@ export function TasksProvider({ children }: { children: ReactNode }) {
     setTasks(prev => prev.filter(task => task.id !== id))
   }
 
+  const addTagToTask = (id: string, tag: TaskTag) => {
+    setTasks(prev => prev.map(task => (task.id == id ? { ...task, tags: [...(task.tags || []), tag], } : task)))
+  }
+
   return (
-    <TasksContext.Provider value={{ tasks, createTask, updateTask, deleteTask }}>
+    <TasksContext.Provider value={{ tasks, createTask, updateTask, deleteTask, addTagToTask }}>
       {children}
     </TasksContext.Provider>
   )
