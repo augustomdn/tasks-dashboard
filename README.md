@@ -41,6 +41,8 @@ Obs: Na aplição existe persistência (Todos os dados ficam salvos no localStor
     - Log ao efetuar logoff
     - Log ao inserir credenciais erradas no formulário
     - Log ao criar, editar e deletar tarefas.
+- Criação de Tags personalizadas:
+    - É oferecido ao usuário a possibilidade de adicionar tags extras aos cards, com cores personalizadas.
 
 
 ### ⚙️ Instalação & Pré-requisitos
