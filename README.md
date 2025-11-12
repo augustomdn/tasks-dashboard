@@ -26,6 +26,7 @@
     - Prioridades
     - Status
     - Data de criação
+    (Pensei em por um regex no input de busca para evitar que o usuário não conseguisse achar as tarefas caso digitasse caracteres especiais, mas resolvi poupar tempo para entregar o MVP).
 
 Obs: Na aplição existe persistência (Todos os dados ficam salvos no localStorage)
 
