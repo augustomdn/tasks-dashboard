@@ -11,7 +11,7 @@
 - [Tecnologias](#tecnologias)
 - [Licença](#licença)
 
-![Tela de tarefas da aplicação](https://i.imgur.com/vTPaHDL.png)
+![Tela de tarefas da aplicação](https://i.imgur.com/j8E40Kc.jpeg)
 
 
 ### ✨ Funcionalidades
