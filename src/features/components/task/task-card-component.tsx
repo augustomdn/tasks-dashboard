@@ -24,7 +24,7 @@ export default function TaskCardComponent({
       key={task.id}
       className="p-4 flex flex-col justify-between min-h-56 sm:min-h-64 transition-all duration-150">
       <div className="flex flex-col justify-between items-start gap-2">
-        <div className="w-full flex">
+        <div className="w-full flex justify-between">
           <h3 className="text-lg font-semibold truncate">{task.title}</h3>
           <div className="flex items-center gap-1 shrink-0">
             <AddTaskTagDialogComponent task={task} />
