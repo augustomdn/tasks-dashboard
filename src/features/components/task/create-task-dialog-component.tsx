@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,7 @@ import {
   TASK_STATUS_LABELS,
   TaskStatus,
 } from "@/constants/task-status";
+import { useForm } from "react-hook-form";
 
 interface Props {
   open: boolean;
@@ -27,41 +28,57 @@ interface Props {
   task?: Task | null;
 }
 
+interface TaskFormValues {
+  title: string;
+  description: string;
+  priority: TaskPriorities;
+  status: TaskStatus;
+}
+
 export default function CreateTaskDialogComponent({ open, setOpen, task }: Props) {
   const { createTask, updateTask } = useTasksContext();
-
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState<TaskPriorities>("normal");
-  const [status, setStatus] = useState<TaskStatus>("pending");
 
   const taskPriorities = TASK_PRIORITIES;
   const taskPrioritiesLabels = TASK_PRIORITIES_LABELS;
   const taskStatus = TASK_STATUS;
   const taskStatusLabels = TASK_STATUS_LABELS;
 
+  const {
+    register, handleSubmit, reset, formState: { errors },
+  } = useForm<TaskFormValues>({
+    defaultValues: {
+      title: "",
+      description: "",
+      priority: "normal",
+      status: "pending",
+    }
+  });
+
 
   useEffect(() => {
     if (task) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setTitle(task.title);
-      setDescription(task.description);
-      setPriority(task.priority);
-      setStatus(task.status);
+      reset({
+        title: task.title,
+        description: task.description,
+        priority: task.priority,
+        status: task.status
+      })
     } else {
-      setTitle("");
-      setDescription("");
-      setPriority("normal");
-      setStatus("pending");
+      reset({
+        title: "",
+        description: "",
+        priority: "normal",
+        status: "pending"
+      })
     }
-  }, [task, open]);
+  }, [task, open, reset]);
 
-  function handleSave() {
+  function onSubmit(data: TaskFormValues) {
     if (task) {
-      updateTask(task.id, { title, description, priority, status });
+      updateTask(task.id, data);
       toast.success("Tarefa atualizada!");
     } else {
-      createTask({ title, description, priority, status });
+      createTask(data);
       toast.success("Tarefa criada!");
     }
     setOpen(false);
@@ -77,29 +94,32 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex flex-col gap-3 mt-4">
-          <Label className="text-sm">Título</Label>
-          <Input
-            placeholder="Título"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 mt-4">
+          <div>
+            <Label className="text-sm">Título</Label>
+            <Input
+              placeholder="Título"
+              {...register("title", { required: "O título é obrigatório!" })}
+            />
+            {errors.title && (
+              <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
+            )}
+
+          </div>
 
           <Label className="text-sm">Descrição</Label>
           <Textarea
             placeholder="Descrição"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
             className="h-24 resize-none w-full wrap-break-word overflow-y-auto"
             aria-expanded="false"
+            {...register("description")}
           />
 
 
           <Label className="text-sm">Prioridade</Label>
           <select
             className="border rounded p-2"
-            value={priority}
-            onChange={(e) => setPriority(e.target.value as TaskPriorities)}
+            {...register("priority")}
           >
             {taskPriorities.map((priority) => (
               <option key={priority} value={priority}>
@@ -111,8 +131,7 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
           <Label className="text-sm">Status</Label>
           <select
             className="border rounded p-2"
-            value={status}
-            onChange={(e) => setStatus(e.target.value as TaskStatus)}
+            {...register("status")}
           >
             {taskStatus.map((status) => (
               <option key={status} value={status}>
@@ -120,13 +139,14 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
               </option>
             ))}
           </select>
-        </div>
 
-        <DialogFooter className="pt-4">
-          <Button onClick={handleSave} className="w-full sm:w-auto">
-            {task ? "Salvar Alterações" : "Criar Tarefa"}
-          </Button>
-        </DialogFooter>
+          <DialogFooter className="pt-4">
+            <Button type="submit" className="w-full sm:w-auto">
+              {task ? "Salvar Alterações" : "Criar Tarefa"}
+            </Button>
+          </DialogFooter>
+        </form>
+
       </DialogContent>
     </Dialog>
   );

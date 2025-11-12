@@ -5,6 +5,7 @@ import DeleteTaskConfirmDialogComponent from "./delete-task-confirm-dialog-compo
 import TaskPriorityBadgeComponent from "./task-priority-badge-component";
 import { Task } from "@/types/task";
 import TaskStatusIndicatorComponent from "./task-status-indicator-component";
+import { formatDateTime } from "@/utils/formatDate";
 
 interface CardProps {
   task: Task;
@@ -26,7 +27,7 @@ export default function TaskCardComponent({
         <div>
           <h3 className="text-lg font-semibold">{task.title}</h3>
           <span className="text-xs text-gray-500 block">
-            Criado em: {task.createdAt}
+            Criado em: {formatDateTime(task.createdAt)}
           </span>
         </div>
         <div className="flex">
