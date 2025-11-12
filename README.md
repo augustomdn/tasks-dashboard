@@ -11,6 +11,8 @@
 - [Tecnologias](#tecnologias)
 - [Licença](#licença)
 
+![Tela de tarefas da aplicação](https://i.imgur.com/YUTdZlR.jpeg)
+
 
 ### ✨ Funcionalidades
 - Login, é possível efetuar login com as credencias solicitadas pelo avaliador [Login: admin] [Senha: password].
