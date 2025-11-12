@@ -12,7 +12,7 @@ export default function SearchTaskInputComponent({value, setFilterTask} : Props)
         <Input
             type="text"
             placeholder="Pesquisar"
-            className="bg-gray-200 outline-none py-2 w-[90vw] "
+            className="bg-white outline-none py-2 w-[90vw]"
             value={value}
             onChange={(e) => setFilterTask(e.target.value)}
         />
