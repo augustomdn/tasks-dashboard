@@ -1,10 +1,13 @@
 import { Badge } from "@/components/ui/badge";
-import { Task } from "@/types/task";
+import { TASK_PRIORITIES_LABELS, TaskPriorities } from "@/constants/task-priorities";
 
 
 interface Props {
-    task: Task;
+    task: TaskPriorities;
 }
+
+  const taskPriority = TASK_PRIORITIES_LABELS;
+
 
 function getPriorityColor(priority: string) {
     switch (priority) {
@@ -23,7 +26,7 @@ function getPriorityColor(priority: string) {
 
 export default function TaskPriorityBadgeComponent({ task }: Props) {
     return (
-        <Badge className={`${getPriorityColor(task.priority)}`}><span className="text-sm italic">{task.priority}</span></Badge>
+        <Badge className={`${getPriorityColor(taskPriority[task])}`}><span className="text-sm italic">{taskPriority[task]}</span></Badge>
 
     )
 }

@@ -22,16 +22,31 @@ import { TASK_STATUS, TASK_STATUS_LABELS } from "@/constants/task-status";
 export default function TasksPageComponent() {
     const { tasks, deleteTask, } = useTasksContext();
     const [filterTask, setFilterTask] = useState("");
+    const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [open, setOpen] = useState(false);
     const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
     const router = useRouter();
     const tasksContext = useTasksContext();
 
-    const filteredTasks = tasks.filter((task) => task.title.toLowerCase().includes(filterTask.toLowerCase()) ||
-        task.description?.toLowerCase().includes(filterTask.toLowerCase()));
-
     const taskStatus = TASK_STATUS;
+    const taskLabel = TASK_STATUS_LABELS;
+
+    const filteredTasks = tasks.filter((task) => {
+        console.log("Comparando:", task.status, "com", selectedStatus);
+
+        const matchesText = task.title.toLowerCase().includes(filterTask.toLowerCase()) ||
+            task.description?.toLowerCase().includes(filterTask.toLowerCase());
+
+        const matchesStatus = selectedStatus ? task.status === selectedStatus : true;
+
+        return matchesText && matchesStatus;
+    });
+
+
+    useEffect(() => {
+        console.log("selectedStatus:", selectedStatus)
+    }, [selectedStatus])
 
 
     useEffect(() => {
@@ -115,31 +130,26 @@ export default function TasksPageComponent() {
                                         <DialogDescription className="flex">
                                             <div className="flex flex-col gap-2">
                                                 <span className="font-semibold text-start">Status</span>
-                                                <Select>
+                                                <Select value={selectedStatus ?? "_"} onValueChange={(status) => setSelectedStatus(status === "_" ? null : status || null)}>
                                                     <SelectTrigger className="w-[180px]">
                                                         <SelectValue placeholder="Status" />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         <SelectGroup>
                                                             <SelectLabel>Status</SelectLabel>
-                                                            {taskStatus.map((status) => {
-                                                                return (
+                                                            <SelectItem value="_">Todos</SelectItem>
+                                                            {taskStatus.map((status) => (
+                                                                <SelectItem key={status} value={status} >
+                                                                    {taskLabel[status]}
+                                                                </SelectItem>
+                                                            ))}
 
-                                                                    <SelectItem key={status} value={status}>{TASK_STATUS_LABELS[status]}</SelectItem>
-
-                                                                )
-                                                            })}
-                                                            {/* <SelectItem value="apple">Apple</SelectItem>
-                                                            <SelectItem value="banana">Banana</SelectItem>
-                                                            <SelectItem value="blueberry">Blueberry</SelectItem>
-                                                            <SelectItem value="grapes">Grapes</SelectItem>
-                                                            <SelectItem value="pineapple">Pineapple</SelectItem> */}
                                                         </SelectGroup>
                                                     </SelectContent>
                                                 </Select>
                                             </div>
                                         </DialogDescription>
-                                        <DialogTitle className="text-start">Ordenar por:</DialogTitle>
+                                        {/* <DialogTitle className="text-start">Ordenar por:</DialogTitle>
                                         <DialogDescription className="flex">
                                             <div className="flex flex-col gap-2">
                                                 <span className="font-semibold text-start">Data</span>
@@ -160,7 +170,7 @@ export default function TasksPageComponent() {
                                                 </Select>
                                             </div>
 
-                                        </DialogDescription>
+                                        </DialogDescription> */}
                                     </DialogHeader>
                                 </DialogContent>
                             </Dialog>

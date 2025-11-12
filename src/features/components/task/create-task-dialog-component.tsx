@@ -9,6 +9,17 @@ import { useTasksContext } from "@/contexts/TaskContext";
 import { Task } from "@/types/task";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
+import {
+  TASK_PRIORITIES,
+  TASK_PRIORITIES_LABELS,
+  TaskPriorities,
+} from "@/constants/task-priorities";
+
+import {
+  TASK_STATUS,
+  TASK_STATUS_LABELS,
+  TaskStatus,
+} from "@/constants/task-status";
 
 interface Props {
   open: boolean;
@@ -21,8 +32,14 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("Normal");
-  const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState<TaskPriorities>("normal");
+  const [status, setStatus] = useState<TaskStatus>("pending");
+
+  const taskPriorities = TASK_PRIORITIES;
+  const taskPrioritiesLabels = TASK_PRIORITIES_LABELS;
+  const taskStatus = TASK_STATUS;
+  const taskStatusLabels = TASK_STATUS_LABELS;
+
 
   useEffect(() => {
     if (task) {
@@ -34,8 +51,8 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
     } else {
       setTitle("");
       setDescription("");
-      setPriority("Normal");
-      setStatus("Pendente");
+      setPriority("normal");
+      setStatus("pending");
     }
   }, [task, open]);
 
@@ -82,23 +99,26 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
           <select
             className="border rounded p-2"
             value={priority}
-            onChange={(e) => setPriority(e.target.value)}
+            onChange={(e) => setPriority(e.target.value as TaskPriorities)}
           >
-            <option value="Urgente">Urgente</option>
-            <option value="Importante">Importante</option>
-            <option value="Normal">Normal</option>
-            <option value="Não importante">Não importante</option>
+            {taskPriorities.map((priority) => (
+              <option key={priority} value={priority}>
+                {taskPrioritiesLabels[priority]}
+              </option>
+            ))}
           </select>
 
           <Label className="text-sm">Status</Label>
           <select
             className="border rounded p-2"
             value={status}
-            onChange={(e) => setStatus(e.target.value)}
+            onChange={(e) => setStatus(e.target.value as TaskStatus)}
           >
-            <option value="Pendente">Pendente</option>
-            <option value="Em andamento">Em andamento</option>
-            <option value="Concluída">Concluída</option>
+            {taskStatus.map((status) => (
+              <option key={status} value={status}>
+                {taskStatusLabels[status]}
+              </option>
+            ))}
           </select>
         </div>
 
