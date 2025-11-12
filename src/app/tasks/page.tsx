@@ -1,18 +1,16 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { useTasksContext } from "@/contexts/TaskContext";
 import LoadingSpinnerPageComponent from "@/features/components/loading/loading";
 import LogoutButtonComponent from "@/features/components/login/logout-button-component";
 import AddTaskButtonComponent from "@/features/components/task/add-task-button-component";
 import CreateTaskDialogComponent from "@/features/components/task/create-task-dialog-component";
-import DeleteTaskConfirmDialogComponent from "@/features/components/task/delete-task-confirm-dialog-component";
 import EmptySearchPlaceHolderComponent from "@/features/components/task/empty-search-results-component";
 import EmptyTasksPlaceHolderComponent from "@/features/components/task/empty-tasks-placeholder-component";
 import SearchTaskInputComponent from "@/features/components/task/search-task-input-component";
-import TaskPriorityBadgeComponent from "@/features/components/task/task-priority-badge-component";
-import { Plus, Edit } from "lucide-react";
+import TaskCardComponent from "@/features/components/task/task-card-component";
+import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -76,19 +74,24 @@ export default function TasksPageComponent() {
             <header className="w-full flex justify-between items-center">
                 <h2 className="text-2xl font-bold">Dashboard</h2>
                 <div className="md:flex gap-2">
-                    <AddTaskButtonComponent className="hidden md:flex" setEditingTaskId={setEditingTaskId} setOpen={setOpen} />
+                    <AddTaskButtonComponent
+                        className="hidden md:flex"
+                        setEditingTaskId={setEditingTaskId}
+                        setOpen={setOpen} />
                     <LogoutButtonComponent handleLogout={handleLogout} />
                 </div>
             </header>
             <div className="sm:hidden fixed right-4 bottom-4">
                 <Button
                     className="rounded-full w-16 h-16 flex items-center justify-center"
-                    onClick={() => { setEditingTaskId(null); setOpen(true); }}
-                >
+                    onClick={() => { setEditingTaskId(null); setOpen(true); }}>
                     <Plus />
                 </Button>
             </div>
-            <CreateTaskDialogComponent open={open} setOpen={setOpen} task={tasksContext.tasks.find((task) => task.id === editingTaskId || null)} />
+            <CreateTaskDialogComponent
+                open={open}
+                setOpen={setOpen}
+                task={tasksContext.tasks.find((task) => task.id === editingTaskId || null)} />
             <section className="h-full w-full flex flex-col gap-4">
                 <div>
                     {tasksContext.tasks.length === 0 ? null :
@@ -116,27 +119,21 @@ export default function TasksPageComponent() {
                 ) : filteredTasks.length === 0 ? (
                     <EmptySearchPlaceHolderComponent />
                 ) :
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {filteredTasks.map((task) => (
-                            <Card key={task.id} className="p-4 flex flex-col justify-between">
-                                <div className="flex justify-between items-start">
-                                    <h3 className="text-lg font-semibold">{task.title}</h3>
-                                    <div className="flex">
-                                        <Button size="sm" variant="ghost" onClick={() => handleEditTask(task.id)}>
-                                            <Edit />
-                                        </Button>
+                    <>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {filteredTasks.map((task) => (
+                                <TaskCardComponent
+                                    task={task}
+                                    handleEditTask={handleEditTask}
+                                    handleDeleteTask={handleDeleteTask}
+                                    key={task.id}
+                                />
+                            ))}
+                        </div>
 
-                                        <DeleteTaskConfirmDialogComponent handleDelete={handleDeleteTask} taskId={task.id} />
-                                    </div>
-                                </div>
-                                <p className="mt-2 text-gray-700 italic">{task.description || "Sem descrição"}</p>
-                                <div className="mt-4 flex justify-between items-center">
-                                    <TaskPriorityBadgeComponent task={task} />
-                                    <span>{task.status}</span>
-                                </div>
-                            </Card>
-                        ))}
-                    </div>}
+                    </>
+
+                }
             </section >
         </div >
     );

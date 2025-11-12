@@ -72,7 +72,7 @@ export default function LoginFormComponent() {
       <CardHeader>
         <CardTitle>Acesse sua conta</CardTitle>
         <CardAction>
-          <Button variant="link" className="cursor-pointer">Cadastre-se</Button>
+          <Button variant="link" className="cursor-pointer" onClick={() => router.push("/not-found")}>Cadastre-se</Button>
         </CardAction>
       </CardHeader>
       <CardContent>
@@ -88,9 +88,9 @@ export default function LoginFormComponent() {
           <div className="grid gap-2">
             <div className="flex items-center gap-2">
               <Label htmlFor="password">Senha</Label>
-              <a href="" className="ml-auto inline-block text-sm underline-offset-4 hover:underline cursor-pointer">
+              <Button variant="link" className="ml-auto inline-block text-sm underline-offset-4 hover:underline cursor-pointer" onClick={() => router.push("/not-found")}>
                 Esqueceu a Senha?
-              </a>
+              </Button>
             </div>
             <Input id="password" type="password" {...register("password")} />
             {errors.password && (

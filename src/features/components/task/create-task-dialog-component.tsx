@@ -14,7 +14,6 @@ interface Props {
   open: boolean;
   setOpen: (value: boolean) => void;
   task?: Task | null;
-
 }
 
 export default function CreateTaskDialogComponent({ open, setOpen, task }: Props) {
@@ -24,7 +23,6 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("Normal");
   const [status, setStatus] = useState("");
-
 
   useEffect(() => {
     if (task) {
@@ -52,13 +50,14 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
     setOpen(false);
   }
 
-
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
+      <DialogContent className="w-[90vw] max-w-md max-h-[80vh] overflow-y-auto sm:max-w-lg rounded-xl p-4">
+
         <DialogHeader>
-          <DialogTitle>{task ? "Editar Tarefa" : "Nova Tarefa"}</DialogTitle>
+          <DialogTitle className="text-lg font-semibold text-center sm:text-left">
+            {task ? "Editar Tarefa" : "Nova Tarefa"}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-3 mt-4">
@@ -68,12 +67,17 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+
           <Label className="text-sm">Descrição</Label>
           <Textarea
             placeholder="Descrição"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            className="h-24 resize-none w-full wrap-break-word overflow-y-auto"
+            aria-expanded="false"
           />
+
+
           <Label className="text-sm">Prioridade</Label>
           <select
             className="border rounded p-2"
@@ -85,6 +89,7 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
             <option value="Normal">Normal</option>
             <option value="Não importante">Não importante</option>
           </select>
+
           <Label className="text-sm">Status</Label>
           <select
             className="border rounded p-2"
@@ -97,8 +102,8 @@ export default function CreateTaskDialogComponent({ open, setOpen, task }: Props
           </select>
         </div>
 
-        <DialogFooter>
-          <Button onClick={handleSave}>
+        <DialogFooter className="pt-4">
+          <Button onClick={handleSave} className="w-full sm:w-auto">
             {task ? "Salvar Alterações" : "Criar Tarefa"}
           </Button>
         </DialogFooter>
