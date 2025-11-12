@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TasksDB
 
-## Getting Started
+#### Aplicação voltada para criação de uma lista de tarefas, possibilitando uma maior autonomia das atividades do usuário no dia a dia.
 
-First, run the development server:
+![Tela principal da aplicação]()
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+#### Este projeto foi criado como uma resolução de um teste técnico solicitado pela SGA (Software Gaming Architects).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Funcionalidades](#funcionalidades)
+- [Instalação](#instalação)
+- [Tecnologias](#tecnologias)
+- [Licença](#licença)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### ✨ Funcionalidades
+- Login, é possível efetuar login com as credencias solicitadas pelo avaliador [Login: admin] [Senha: password].
+- Dentro da plataforma é possível:
+  - Criar tarefas, cada tarefa tem um Título(obrigatório), Descrição, Prioridade e Status.
+  - Editar tarefas
+  - Excluir tarefas
+  - Efetuar filtragens por:
+    - Títulos
+    - Descrições
+    - Prioridades
+    - Status
+    - Data de criação
 
-## Learn More
+Obs: Na aplição existe persistência (Todos os dados ficam salvos no localStorage)
 
-To learn more about Next.js, take a look at the following resources:
+### ⚙️ Instalação & Pré-requisitos
+- [Node.js](https://nodejs.org/) (versão 18 ou superior)
+- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🔄 Passos
+1. Clone o repositório
+   ```bash
+   git clone [https://github.com/seu-usuario/seu-repo.git](https://github.com/augustomdn/tasks-dashboard.git)
+   cd seu-repo
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Rode o projeto
+   ```bash
+    npm run dev
+    ####or
+    yarn dev
+   ```
 
-## Deploy on Vercel
+3. Abra no navegador
+   ```bash
+    Open [http://localhost:3000](http://localhost:3000) no seu navegador.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🛠 Tecnologias utilizadas
+- [Next.js](https://nextjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Zod](https://zod.dev/)
+- [ShadcnUI](https://ui.shadcn.com/)
+- [TailwindCSS](https://tailwindcss.com/)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 📄 Licença
+- [Licença](https://choosealicense.com/licenses/mit/)
+
