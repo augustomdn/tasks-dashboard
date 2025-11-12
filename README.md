@@ -11,7 +11,7 @@
 - [Tecnologias](#tecnologias)
 - [Licença](#licença)
 
-![Tela de tarefas da aplicação](https://i.imgur.com/YUTdZlR.jpeg)
+![Tela de tarefas da aplicação](https://i.imgur.com/vTPaHDL.png)
 
 
 ### ✨ Funcionalidades
@@ -28,6 +28,19 @@
     - Data de criação
 
 Obs: Na aplição existe persistência (Todos os dados ficam salvos no localStorage)
+
+### Melhorias
+
+- Criei um TaskContext para gerenciar o estado global das tarefas dentro da aplicação.
+- Foi feito um hook personalizado para as Tasks onde é efetuado as operações de CRUD: Optei por esta abordagem para centralizar toda a lógica
+- Guardas na rota:
+  - Ao tentar acessar alguma rota sem ser autênticado o usuário é redirecionado para uma página 404
+- Logs de Atividade
+    - Log ao efetuar login
+    - Log ao efetuar logoff
+    - Log ao inserir credenciais erradas no formulário
+    - Log ao criar, editar e deletar tarefas.
+
 
 ### ⚙️ Instalação & Pré-requisitos
 - [Node.js](https://nodejs.org/) (versão 18 ou superior)
