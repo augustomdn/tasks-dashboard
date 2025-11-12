@@ -4,7 +4,7 @@ import { Edit } from "lucide-react";
 import DeleteTaskConfirmDialogComponent from "./delete-task-confirm-dialog-component";
 import TaskPriorityBadgeComponent from "./task-priority-badge-component";
 import { Task } from "@/types/task";
-import { TASK_STATUS_LABELS } from "@/constants/task-status";
+import TaskStatusIndicatorComponent from "./task-status-indicator-component";
 
 interface CardProps {
   task: Task;
@@ -17,10 +17,6 @@ export default function TaskCardComponent({
   handleEditTask,
   handleDeleteTask,
 }: CardProps) {
-
-  const taskLabel = TASK_STATUS_LABELS;
-
-
   return (
     <Card
       key={task.id}
@@ -57,7 +53,7 @@ export default function TaskCardComponent({
 
       <div className="mt-4 flex justify-between items-center">
         <TaskPriorityBadgeComponent task={task.priority} />
-        <span className="text-sm text-gray-600">{taskLabel[task.status]}</span>
+        <TaskStatusIndicatorComponent task={task.status} />
       </div>
     </Card>
   );
