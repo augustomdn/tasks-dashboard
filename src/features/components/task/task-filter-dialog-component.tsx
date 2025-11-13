@@ -2,10 +2,11 @@
 
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Eraser, Funnel } from "lucide-react"
+import { Eraser, Funnel, Tag } from "lucide-react"
 import { TASK_STATUS, TASK_STATUS_LABELS } from "@/constants/task-status"
 import { TASK_PRIORITIES, TASK_PRIORITIES_LABELS } from "@/constants/task-priorities"
 import { Button } from "@/components/ui/button"
+import { Task } from "@/types/task"
 
 interface TaskFilterDialogComponentProps {
     open: boolean;
@@ -16,6 +17,9 @@ interface TaskFilterDialogComponentProps {
     setSelectedPriority: (status: string | null) => void;
     sortOrder: "asc" | "desc" | null
     setSortOrder: (order: "asc" | "desc" | null) => void
+    selectedTag: string | null;
+    setSelectedTag: (tag: string | null) => void;
+    tasks: Task[];
 }
 
 export default function TaskFilterDialogComponent({
@@ -27,6 +31,9 @@ export default function TaskFilterDialogComponent({
     setSelectedPriority,
     sortOrder,
     setSortOrder,
+    selectedTag,
+    setSelectedTag,
+    tasks
 }: TaskFilterDialogComponentProps) {
 
     const taskStatus = TASK_STATUS;
@@ -34,10 +41,17 @@ export default function TaskFilterDialogComponent({
     const taskPriority = TASK_PRIORITIES;
     const priorityLabel = TASK_PRIORITIES_LABELS;
 
+    const allTags = tasks.flatMap(task => task.tags ?? []);
+
+    const uniqueTags = Array.from(
+        new Map(allTags.map(tag => [tag.name, tag])).values()
+    );
+
     function handleReset() {
         setSelectedStatus(null);
         setSelectedPriority(null);
         setSortOrder(null);
+        setSelectedTag(null)
         setOpen(false);
     }
 
@@ -108,6 +122,28 @@ export default function TaskFilterDialogComponent({
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
+                        <span className="font-semibold text-start">Tags</span>
+                        <div className="flex justify-center flex-wrap gap-2">
+                            {uniqueTags.length === 0 ? (
+                                <p className="col-span-5 text-sm text-gray-500">Nenhuma tag usada</p>
+                            ) : (
+                                uniqueTags.map((tag, key) => (
+                                    <button
+                                        key={key}
+                                        type="button"
+                                        onClick={() => setSelectedTag(tag.name)}
+                                        className={`${tag.color} flex items-center justify-center gap-2 px-2 py-1 rounded-md border transition-all duration-150 hover:scale-105
+                                ${selectedTag === tag.name
+                                                ? "border-gray-500 scale-105 shadow-md"
+                                                : "border-transparent"
+                                            }`}
+                                    >
+                                        <Tag className="w-3 h-3 text-white" />
+                                        <span className="text-xs font-medium text-white">{tag.name}</span>
+                                    </button>
+                                ))
+                            )}
+                        </div>
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="w-full flex justify-center sm:justify-end">

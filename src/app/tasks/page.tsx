@@ -122,15 +122,15 @@ export default function TasksPageComponent() {
                             <TaskFilterDialogComponent
                                 open={openFilter}
                                 setOpen={setOpenFilter}
-                                // tasks={tasksContext.tasks}
+                                tasks={tasksContext.tasks}
                                 selectedStatus={selectedStatus}
                                 setSelectedStatus={setSelectedStatus}
                                 selectedPriority={selectedPriority}
                                 setSelectedPriority={setSelectedPriority}
                                 sortOrder={sortOrder}
                                 setSortOrder={setSortOrder}
-                            // selectedColor={selectedColor}
-                            // setSelectedColor={setSelectedColor}
+                                selectedTag={selectedTag}
+                                setSelectedTag={setSelectedTag}
                             />
                         </div>
                     }
