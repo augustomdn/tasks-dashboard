@@ -92,7 +92,7 @@ export default function TasksPageComponent() {
 
 
     return (
-        <div className="h-screen md:h-screen p-4 flex flex-col gap-4">
+        <div className="h-screen p-4 flex flex-col gap-4">
             <header className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold">Dashboard</h2>
                 <div className="flex gap 2 md:flex gap-2">
