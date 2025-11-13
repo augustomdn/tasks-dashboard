@@ -11,7 +11,7 @@ export default function TaskTagComponent({ task }: Props) {
         <>
             {task.tags?.slice(0, 2).map((tag, index) => {
                 const displayName =
-                    tag.name.length > 8 ? `${tag.name.slice(0, 8)}...` : tag.name;
+                    tag.name.length > 5 ? `${tag.name.slice(0, 5)}...` : tag.name;
 
                 return (
                     <span

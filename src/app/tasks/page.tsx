@@ -23,9 +23,11 @@ export default function TasksPageComponent() {
     const [filterTask, setFilterTask] = useState("");
     const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
     const [selectedPriority, setSelectedPriority] = useState<string | null>(null);
+    const [selectedTag, setSelectedTag] = useState<string | null>(null);
     const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [open, setOpen] = useState(false);
+    const [openFilter, setOpenFilter] = useState(false);
     const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
     const router = useRouter();
     const tasksContext = useTasksContext();
@@ -39,8 +41,9 @@ export default function TasksPageComponent() {
 
         const matchesStatus = selectedStatus ? task.status === selectedStatus : true;
         const matchesPriority = selectedPriority ? task.priority === selectedPriority : true;
+        const matchesTag = selectedTag ? task.tags?.some((tag) => tag.name === selectedTag) : true;
 
-        return matchesText && matchesStatus && matchesPriority;
+        return matchesText && matchesStatus && matchesPriority && matchesTag;
     }).sort((a, b) => {
         const dateA = new Date(a.createdAt).getTime();
         const dateB = new Date(b.createdAt).getTime();
@@ -117,13 +120,18 @@ export default function TasksPageComponent() {
                         <div className="flex items-center gap-2  rounded-md">
                             <SearchTaskInputComponent value={filterTask} setFilterTask={setFilterTask} />
                             <TaskFilterDialogComponent
+                                open={openFilter}
+                                setOpen={setOpenFilter}
+                                // tasks={tasksContext.tasks}
                                 selectedStatus={selectedStatus}
                                 setSelectedStatus={setSelectedStatus}
                                 selectedPriority={selectedPriority}
                                 setSelectedPriority={setSelectedPriority}
                                 sortOrder={sortOrder}
-                                setSortOrder={setSortOrder} />
-
+                                setSortOrder={setSortOrder}
+                            // selectedColor={selectedColor}
+                            // setSelectedColor={setSelectedColor}
+                            />
                         </div>
                     }
                 </div>

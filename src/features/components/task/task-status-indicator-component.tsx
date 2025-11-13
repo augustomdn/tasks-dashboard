@@ -23,7 +23,7 @@ export default function TaskStatusIndicatorComponent({ task }: Props) {
     return (
         <div className="flex items-center gap-2">
             <span className={`${getStatusColor(taskLabel[task])} animate-pulse w-2 h-2 rounded-[50%]`}></span>
-            <span className="text-sm text-gray-600">{taskLabel[task]}</span>
+            <span className="text-sm text-gray-600 text-ellipsis">{taskLabel[task]}</span>
         </div>
     )
 

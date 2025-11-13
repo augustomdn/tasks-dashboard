@@ -23,7 +23,9 @@ export default function TaskCardComponent({
   return (
     <Card
       key={task.id}
-      className="p-4 flex flex-col justify-between min-h-56 sm:min-h-64 transition-all duration-150">
+      className="p-4 flex flex-col justify-between min-h-56 sm:min-h-64 transition-all duration-150 overflow-hidden wrap-break-word"
+    >
+
       <div className="flex flex-col justify-between items-start gap-2">
         <div className="w-full flex justify-between">
           <h3 className="text-lg font-semibold truncate">{task.title}</h3>

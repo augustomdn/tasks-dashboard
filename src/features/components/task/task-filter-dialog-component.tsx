@@ -1,12 +1,15 @@
 "use client"
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Funnel } from "lucide-react"
+import { Eraser, Funnel } from "lucide-react"
 import { TASK_STATUS, TASK_STATUS_LABELS } from "@/constants/task-status"
 import { TASK_PRIORITIES, TASK_PRIORITIES_LABELS } from "@/constants/task-priorities"
+import { Button } from "@/components/ui/button"
 
 interface TaskFilterDialogComponentProps {
+    open: boolean;
+    setOpen: (value: boolean) => void;
     selectedStatus: string | null;
     setSelectedStatus: (status: string | null) => void;
     selectedPriority: string | null;
@@ -16,6 +19,8 @@ interface TaskFilterDialogComponentProps {
 }
 
 export default function TaskFilterDialogComponent({
+    open,
+    setOpen,
     selectedStatus,
     setSelectedStatus,
     selectedPriority,
@@ -23,13 +28,21 @@ export default function TaskFilterDialogComponent({
     sortOrder,
     setSortOrder,
 }: TaskFilterDialogComponentProps) {
+
     const taskStatus = TASK_STATUS;
     const taskLabels = TASK_STATUS_LABELS;
     const taskPriority = TASK_PRIORITIES;
     const priorityLabel = TASK_PRIORITIES_LABELS;
 
+    function handleReset() {
+        setSelectedStatus(null);
+        setSelectedPriority(null);
+        setSortOrder(null);
+        setOpen(false);
+    }
+
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger className="flex items-center gap-2 bg-black p-2 rounded-md">
                 <span className="text-white text-sm">Filtros</span>
                 <Funnel size={16} color="white" />
@@ -97,6 +110,12 @@ export default function TaskFilterDialogComponent({
                         </Select>
                     </DialogDescription>
                 </DialogHeader>
+                <DialogFooter className="w-full flex justify-center sm:justify-end">
+                    <Button onClick={handleReset} className="flex items-center gap-2">
+                        <Eraser className="w-4 h-4" />
+                        <span>Limpar Filtros</span>
+                    </Button>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     )
