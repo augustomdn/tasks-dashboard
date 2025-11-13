@@ -47,6 +47,7 @@ Obs: Na aplição existe persistência (Todos os dados ficam salvos no localStor
     - (Estive trabalhando no CRUD para as Tags mas não deu tempo devido a algumas atividades que tomaram meu tempo durante o dia.)
 - Altamente responsivo
 - Na /tasks é possível ver uma sessão separada para cada tipo de Status onde os respectivos cards transitam entre estas sessões
+- (Gostaria muito de trabalhar na melhoria de subtarefa, mas não deu, mas imagino que atribuir uma propriedade subTasks?: SubTask[] e trabalhar em cima deste modelo seria o ideal)
 
 
 ### ⚙️ Instalação & Pré-requisitos
