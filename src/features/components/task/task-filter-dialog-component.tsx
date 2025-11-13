@@ -1,6 +1,6 @@
 "use client"
 
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Eraser, Funnel, Tag } from "lucide-react"
 import { TASK_STATUS, TASK_STATUS_LABELS } from "@/constants/task-status"
@@ -66,13 +66,13 @@ export default function TaskFilterDialogComponent({
                 <DialogHeader className="gap-4">
                     <DialogTitle className="text-start">Filtrar por:</DialogTitle>
 
-                    <DialogDescription className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2">
                         <span className="font-semibold text-start">Status</span>
                         <Select
                             value={selectedStatus ?? "_"}
                             onValueChange={(status) => setSelectedStatus(status === "_" ? null : status || null)}
                         >
-                            <SelectTrigger className="w-[180px]">
+                            <SelectTrigger className="w-[180px]" >
                                 <SelectValue placeholder="Status" />
                             </SelectTrigger>
 
@@ -91,7 +91,7 @@ export default function TaskFilterDialogComponent({
                         <span className="font-semibold text-start">Prioridade</span>
                         <Select value={selectedPriority ?? "_"} onValueChange={(status) => setSelectedPriority(status === "_" ? null : status || null)}>
                             <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Status" />
+                                <SelectValue placeholder="Prioridade" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
@@ -123,7 +123,7 @@ export default function TaskFilterDialogComponent({
                             </SelectContent>
                         </Select>
                         <span className="font-semibold text-start">Tags</span>
-                        <div className="flex justify-center flex-wrap gap-2">
+                        <section className="flex justify-center flex-wrap gap-2">
                             {uniqueTags.length === 0 ? (
                                 <p className="col-span-5 text-sm text-gray-500">Nenhuma tag usada</p>
                             ) : (
@@ -143,8 +143,8 @@ export default function TaskFilterDialogComponent({
                                     </button>
                                 ))
                             )}
-                        </div>
-                    </DialogDescription>
+                        </section>
+                    </div>
                 </DialogHeader>
                 <DialogFooter className="w-full flex justify-center sm:justify-end">
                     <Button onClick={handleReset} className="flex items-center gap-2">

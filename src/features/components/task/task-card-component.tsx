@@ -20,6 +20,8 @@ export default function TaskCardComponent({
   handleEditTask,
   handleDeleteTask,
 }: CardProps) {
+  
+
   return (
     <Card
       key={task.id}
