@@ -141,18 +141,82 @@ export default function TasksPageComponent() {
                     <EmptySearchPlaceHolderComponent />
                 ) :
                     <>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {filteredTasks.map((task) => (
-                                <TaskCardComponent
-                                    task={task}
-                                    handleEditTask={handleEditTask}
-                                    handleDeleteTask={handleDeleteTask}
-                                    key={task.id}
-                                />
-                            ))}
-                        </div>
+                        {/* Sessão: Pendente */}
+                        <section>
+                            <h2 className="font-semibold text-lg mb-2">Pendente</h2>
+                            {filteredTasks.some((task) => task.status === "pending") ? (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {filteredTasks
+                                        .filter((task) => task.status === "pending")
+                                        .map((task) => (
+                                            <TaskCardComponent
+                                                key={task.id}
+                                                task={task}
+                                                handleEditTask={handleEditTask}
+                                                handleDeleteTask={handleDeleteTask}
+                                            />
+                                        ))}
+                                </div>
+                            ) : (
+                                <div className="w-full h-full flex justify-center items-center">
+                                    <p className="text-lg md:text-xl text-gray-600 mb-6 text-center">
+                                        Nenhuma tarefa pendente.
+                                    </p>
+                                </div>
+                            )}
+                        </section>
 
+                        {/* Sessão: Em progresso */}
+                        <section>
+                            <h2 className="font-semibold text-lg mb-2">Em progresso</h2>
+                            {filteredTasks.some((task) => task.status === "in_progress") ? (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {filteredTasks
+                                        .filter((task) => task.status === "in_progress")
+                                        .map((task) => (
+                                            <TaskCardComponent
+                                                key={task.id}
+                                                task={task}
+                                                handleEditTask={handleEditTask}
+                                                handleDeleteTask={handleDeleteTask}
+                                            />
+                                        ))}
+                                </div>
+                            ) : (
+                                <div className="w-full h-full flex justify-center items-center">
+                                    <p className="text-lg md:text-xl text-gray-600 mb-6 text-center">
+                                        Nenhuma tarefa em progresso.
+                                    </p>
+                                </div>
+                            )}
+                        </section>
+
+                        {/* Sessão: Concluído */}
+                        <section>
+                            <h2 className="font-semibold text-lg mb-2">Concluído</h2>
+                            {filteredTasks.some((task) => task.status === "completed") ? (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {filteredTasks
+                                        .filter((task) => task.status === "completed")
+                                        .map((task) => (
+                                            <TaskCardComponent
+                                                key={task.id}
+                                                task={task}
+                                                handleEditTask={handleEditTask}
+                                                handleDeleteTask={handleDeleteTask}
+                                            />
+                                        ))}
+                                </div>
+                            ) : (
+                                <div className="w-full h-full flex justify-center items-center">
+                                    <p className="text-lg md:text-xl text-gray-600 mb-6 text-center">
+                                        Nenhuma tarefa concluída.
+                                    </p>
+                                </div>
+                            )}
+                        </section>
                     </>
+
 
                 }
             </section >
