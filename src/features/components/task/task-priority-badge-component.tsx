@@ -24,7 +24,7 @@ function getPriorityColor(priority: string) {
 
 export default function TaskPriorityBadgeComponent({ task }: Props) {
     return (
-        <Badge className={`${getPriorityColor(taskPriority[task])}`}><span className="text-[0.5rem]">{taskPriority[task]}</span></Badge>
+        <Badge className={`${getPriorityColor(taskPriority[task])}`}><span className="text-[0.8rem]">{taskPriority[task]}</span></Badge>
 
     )
 }
