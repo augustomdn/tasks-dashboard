@@ -6,6 +6,7 @@
 
 #### Este projeto foi criado como uma resolução de um teste técnico solicitado pela SGA (Software Gaming Architects).
 
+- [Deploy] [Clique aqui](https://tasksdb.vercel.app/)
 - [Funcionalidades](#funcionalidades)
 - [Instalação](#instalação)
 - [Tecnologias](#tecnologias)
